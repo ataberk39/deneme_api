@@ -35,15 +35,33 @@ let data = {
 
 
 
+// function makeDivForCharacterCard(characterData){
+//     let character_card_template = `<div class="character-card">
+//         <img src="${characterData.image}" />
+//         <h2>${characterData.name}(${characterData.gender})</h2>
+//     </div>`;
+
+//     return character_card_template;
+// }
+
 function makeDivForCharacterCard(characterData){
-    let character_card_template = `<div class="character-card">
-        <img src="${characterData.image}" />
-        <h2>${characterData.name}(${characterData.gender})</h2>
-    </div>`;
+    debugger
+    let myContainer = document.getElementsByClassName("container")[0]
 
-    return character_card_template;
+    let myDiv = document.createElement("div")
+    myDiv.classList.add("character-card")
+    myContainer.appendChild(myDiv)
+
+    let myImg = document.createElement("img")
+    myImg.setAttribute("src",characterData.image)
+    myDiv.appendChild(myImg)
+
+    let character = document.createElement("h2")
+    character.innerHTML = characterData.name + "(" + characterData.gender + ")"
+    myDiv.appendChild(character)
+
+    return myDiv
 }
-
 
 function fillContainerWithData(dataArray){
     let my_container = document.getElementsByClassName('container')[0]
@@ -64,14 +82,26 @@ async function generateMylist(page=1){
     //     fillContainerWithData(currentData);
     // });
 }
+
 async function next() {
-    page++;
-    await generateMylist(page);
+    let totalFiles = 4
+    if (page < totalFiles ){
+        page++;
+        await generateMylist(page);
+    }else{
+        console.log("tamamlandı")
+    }
+    
 }
 
 async function prev() {
-    page--;
-    await generateMylist(page);
+    if( 1 < page){
+        page--;
+        await generateMylist(page);
+    }else{
+        console.log("tamamlandı")
+    }
+    
 }
 
 //document events
